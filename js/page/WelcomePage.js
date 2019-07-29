@@ -26,7 +26,7 @@ export default class WelcomePage extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to WelcomePage!</Text>
+        <Text style={styles.welcome}>欢迎来到趣读!</Text>
       </View>
     );
   }

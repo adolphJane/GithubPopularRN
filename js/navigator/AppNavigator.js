@@ -1,15 +1,14 @@
-import {
-    createAppContainer,
-    createStackNavigator,
-    createMaterialTopTabNavigator,
-    createBottomTabNavigator,
-    createSwitchNavigator
-} from 'react-navigation';
+import {createAppContainer, createStackNavigator, createSwitchNavigator} from 'react-navigation';
 import WelcomePage from '../page/WelcomePage';
 import HomePage from '../page/HomePage';
 import DetailPage from '../page/DetailPage';
 import {connect} from 'react-redux';
 import {createReactNavigationReduxMiddleware, createReduxContainer} from 'react-navigation-redux-helpers';
+import WebViewPage from "../page/WebViewPage";
+import AboutPage from "../page/about/AboutPage";
+import AboutMePage from "../page/about/AboutMePage";
+import CustomKeyPage from "../page/CustomKeyPage";
+import SortKeyPage from "../page/SortKeyPage";
 
 //设置跟路由
 export const rootCom = "Init";
@@ -32,6 +31,36 @@ const MainNavigator = createStackNavigator({
     },
     DetailPage: {
         screen: DetailPage,
+        navigationOptions: {
+            header: null,       //通过将header设为null，来禁用StackNavigator的NavigationBar
+        }
+    },
+    WebViewPage: {
+        screen: WebViewPage,
+        navigationOptions: {
+            header: null,       //通过将header设为null，来禁用StackNavigator的NavigationBar
+        }
+    },
+    AboutPage: {
+        screen: AboutPage,
+        navigationOptions: {
+            header: null,       //通过将header设为null，来禁用StackNavigator的NavigationBar
+        }
+    },
+    AboutMePage: {
+        screen: AboutMePage,
+        navigationOptions: {
+            header: null,       //通过将header设为null，来禁用StackNavigator的NavigationBar
+        }
+    },
+    CustomKeyPage: {
+        screen: CustomKeyPage,
+        navigationOptions: {
+            header: null,       //通过将header设为null，来禁用StackNavigator的NavigationBar
+        }
+    },
+    SortKeyPage: {
+        screen: SortKeyPage,
         navigationOptions: {
             header: null,       //通过将header设为null，来禁用StackNavigator的NavigationBar
         }

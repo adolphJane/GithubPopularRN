@@ -8,8 +8,6 @@
 
 import React, {Component} from 'react';
 import {createAppContainer, createBottomTabNavigator} from 'react-navigation';
-import NavigationUtil from '../navigator/NavigationUtil';
-import {Platform, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {BottomTabBar} from 'react-navigation-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -19,6 +17,8 @@ import PopularPage from '../page/PopularPage';
 import FavoritePage from '../page/FavoritePage';
 import TrendingPage from '../page/TrendingPage';
 import MinePage from '../page/MinePage';
+import EventBus from "react-native-event-bus";
+import EventTypes from "../common/EventTypes";
 
 type Props = {};
 
@@ -90,7 +90,7 @@ class DynamicTabNavigator extends Component<Props> {
         }
         const {PopularPage, TrendingPage, FavoritePage, MinePage} = TABS;
         //根据需要配置显示的Tab标签
-        const tabs = {PopularPage, TrendingPage, FavoritePage};
+        const tabs = {PopularPage, TrendingPage, FavoritePage, MinePage};
         //动态配置Tab属性
         PopularPage.navigationOptions.tabBarLabel = '最热';
         return this.Tabs = createAppContainer(createBottomTabNavigator(tabs,{
@@ -102,7 +102,15 @@ class DynamicTabNavigator extends Component<Props> {
 
     render() {
         const Tab = this._tabNavigator();
-        return <Tab/>;
+        return <Tab
+            onNavigationStateChange={(prevState, newState, action) => {
+                EventBus.getInstance().fireEvent(EventTypes.bottom_tab_select, {
+                    //发送底部tab切换的事件
+                    from: prevState.index,
+                    to: newState.index,
+                })
+            }}
+        />;
     }
 }
 
@@ -116,18 +124,9 @@ class TabBarComponent extends Component {
     }
 
     render() {
-        // const {routes, index} = this.props.navigation.state;
-        // if (routes[index].params) {
-        //     const {theme} = routes[index].params;
-        //     //以最新的更新时间为主，防止被其他的Tab之前的修改覆盖掉
-        //     if (theme && theme.updateTime > this.theme.updateTime) {
-        //         this.theme = theme;
-        //     }
-        // }
         return <BottomTabBar
             {...this.props}
-            // activeTintColor = {this.theme.tintColor||this.props.activeTintColor}
-            activeTintColor = {this.props.theme}
+            activeTintColor = {this.props.theme.themeColor}
         />
     }
 }
